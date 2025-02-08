@@ -1,0 +1,30 @@
+{
+  "utilisateurs": [
+    {
+      "id": "b5a5",
+      "nomUtilisateur": "mirana",
+      "mailUtilisateur": "mirana@gmail.com",
+      "motDePasse": "123456"
+    }
+  ],
+  "products": [
+    {
+      "id": "3fe9",
+      "titre": "VARY HAMBO",
+      "prix": "2000",
+      "description": "Efa ela"
+    },
+    {
+      "id": "4c69",
+      "titre": "VARY VAO",
+      "prix": "1800",
+      "description": "zao"
+    },
+    {
+      "id": "0730",
+      "titre": "SOSOA",
+      "prix": "1000",
+      "description": "Be ro"
+    }
+  ]
+}
