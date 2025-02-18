@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box, Typography, Stack, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Stack,
+  Button,
+  TextField,
+  IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +20,9 @@ export default function Inscription() {
     register,
     formState: { errors },
   } = useForm();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit = async (data) => {
     if (data.motDePasse !== data.motDePasseConfirmation) {
@@ -77,7 +88,7 @@ export default function Inscription() {
                 {...register("mailUtilisateur", {
                   required: "Veuillez entrer votre mail",
                   pattern: {
-                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                    value: /^\S+@\S+\.\S+$/,
                     message: "Veuillez entrer une adresse mail valide",
                   },
                 })}
@@ -88,7 +99,7 @@ export default function Inscription() {
                 label="Veuillez choisir un mot de passe"
                 variant="outlined"
                 fullWidth
-                type="password"
+                type={showPassword ? "text" : "password"}
                 {...register("motDePasse", {
                   required: "Veuillez saisir un mot de passe",
                   minLength: {
@@ -99,22 +110,39 @@ export default function Inscription() {
                 })}
                 error={!!errors.motDePasse}
                 helperText={errors.motDePasse?.message}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  ),
+                }}
               />
               <TextField
                 label="Veuillez confirmer le mot de passe"
                 variant="outlined"
                 fullWidth
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 {...register("motDePasseConfirmation", {
                   required: "Veuillez confirmer votre mot de passe",
-                  minLength: {
-                    value: 6,
-                    message:
-                      "La confirmation doit contenir au moins 6 caractères",
-                  },
                 })}
                 error={!!errors.motDePasseConfirmation}
                 helperText={errors.motDePasseConfirmation?.message}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      edge="end"
+                    >
+                      {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  ),
+                }}
               />
             </Stack>
             <div className="text-center">

@@ -1,12 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/authSlice";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Box, TextField, Stack, Typography, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Stack,
+  Typography,
+  Button,
+  IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
+
 const Connexion = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -14,6 +24,7 @@ const Connexion = () => {
   } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
     const user = localStorage.getItem("utilisateur");
     if (user) {
@@ -77,7 +88,7 @@ const Connexion = () => {
                 label="Veuillez saisir votre mot de passe"
                 variant="outlined"
                 fullWidth
-                type="password"
+                type={showPassword ? "text" : "password"}
                 {...register("motDePasse", {
                   required: "Veuillez saisir un mot de passe",
                   minLength: {
@@ -88,6 +99,16 @@ const Connexion = () => {
                 })}
                 error={!!errors.motDePasse}
                 helperText={errors.motDePasse?.message}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  ),
+                }}
               />
             </Stack>
             <div className="text-center">
@@ -100,8 +121,8 @@ const Connexion = () => {
       </div>
       <div className="p-4 ">
         <ul style={{ textAlign: "center" }}>
-          <h4 class="font-semibold">Voulez-vous créer un compte ?</h4>
-          <h4 class="text-green-500 font-bold">
+          <h4 className="font-semibold">Voulez-vous créer un compte ?</h4>
+          <h4 className="text-green-500 font-bold">
             <Link to="/inscription">Cliquez ici</Link>
           </h4>
         </ul>
